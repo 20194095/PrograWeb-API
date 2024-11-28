@@ -1,45 +1,25 @@
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import userRepository from "../repositories/userRepository.js";
 
-class AuthController {
-    async register(req, res) {
-        const { nombre, email, password, tipo } = req.body;
-        try {
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const user = await userRepository.create({
-                nombre,
-                email,
-                password: hashedPassword,
-                tipo,
-            });
-            res.status(201).json(user);
-        } catch (error) {
-            console.error("Error in register:", error);
-            res.status(500).json({ error: "Failed to register user" });
+const authMiddleware = (req, res, next) => {
+    try {
+        // Obtener el token del encabezado Authorization
+        const token = req.headers.authorization?.split(" ")[1]; // Formato esperado: "Bearer <token>"
+        if (!token) {
+            return res.status(401).json({ message: "Acceso no autorizado. Falta el token." });
         }
-    }
 
-    async login(req, res) {
-        const { email, password } = req.body;
-        try {
-            const user = await userRepository.findByEmail(email);
-            if (!user) {
-                return res.status(404).json({ error: "User not found" });
-            }
-            const isPasswordValid = await bcrypt.compare(password, user.password);
-            if (!isPasswordValid) {
-                return res.status(401).json({ error: "Invalid credentials" });
-            }
-            const token = jwt.sign({ id: user.id, tipo: user.tipo }, process.env.JWT_SECRET, {
-                expiresIn: "1h",
-            });
-            res.json({ token });
-        } catch (error) {
-            console.error("Error in login:", error);
-            res.status(500).json({ error: "Failed to log in" });
-        }
-    }
-}
+        // Verificar el token con la clave secreta
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-export default new AuthController();
+        // Añadir los datos del usuario al objeto req para su uso en las rutas
+        req.user = decoded;
+
+        // Continuar con el siguiente middleware o controlador
+        next();
+    } catch (error) {
+        console.error("Error en authMiddleware:", error);
+        return res.status(401).json({ message: "Token inválido o expirado." });
+    }
+};
+
+export default authMiddleware;

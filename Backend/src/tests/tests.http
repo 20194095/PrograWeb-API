@@ -1,0 +1,146 @@
+POST http://localhost:4001/api/auth/register
+Content-Type: application/json
+
+{
+    "nombre": "Juan Pérez",
+    "email": "juan.perez@example.com",
+    "password": "password123",
+    "tipo": "cliente"
+}
+####
+POST http://localhost:4001/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "juan.perez@example.com",
+    "password": "password123"
+}
+####
+GET http://localhost:4001/api/users/me
+Authorization: Bearer <TOKEN>
+####
+PUT http://localhost:4001/api/users/me
+Content-Type: application/json
+Authorization: Bearer <TOKEN>
+
+{
+    "nombre": "Juan Actualizado",
+    "email": "juan.actualizado@example.com",
+    "password": "newpassword123"
+}
+####
+DELETE http://localhost:4001/api/users/me
+Authorization: Bearer <TOKEN>
+####
+GET http://localhost:4001/api/products
+####
+GET http://localhost:4001/api/products?nombre=Producto1
+####
+GET http://localhost:4001/api/products/1
+####
+POST http://localhost:4001/api/products
+Content-Type: application/json
+Authorization: Bearer <ADMIN_TOKEN>
+
+{
+    "nombre": "Nuevo Producto",
+    "descripcion": "Descripción del producto",
+    "precio": 100.50,
+    "stock": 10,
+    "imagen": "http://example.com/image.jpg"
+}
+####
+PUT http://localhost:4001/api/products/1
+Content-Type: application/json
+Authorization: Bearer <ADMIN_TOKEN>
+
+{
+    "nombre": "Producto Actualizado",
+    "descripcion": "Nueva descripción",
+    "precio": 120.00,
+    "stock": 15
+}
+####
+DELETE http://localhost:4001/api/products/1
+Authorization: Bearer <ADMIN_TOKEN>
+####
+GET http://localhost:4001/api/cart
+Authorization: Bearer <TOKEN>
+####
+POST http://localhost:4001/api/cart
+Content-Type: application/json
+Authorization: Bearer <TOKEN>
+
+{
+    "productId": 1,
+    "cantidad": 2
+}
+####
+PUT http://localhost:4001/api/cart/1
+Content-Type: application/json
+Authorization: Bearer <TOKEN>
+
+{
+    "cantidad": 5
+}
+####
+DELETE http://localhost:4001/api/cart/1
+Authorization: Bearer <TOKEN>
+####
+DELETE http://localhost:4001/api/cart
+Authorization: Bearer <TOKEN>
+####
+GET http://localhost:4001/api/orders
+Authorization: Bearer <TOKEN>
+####
+GET http://localhost:4001/api/orders/1
+Authorization: Bearer <TOKEN>
+####
+POST http://localhost:4001/api/orders
+Content-Type: application/json
+Authorization: Bearer <TOKEN>
+
+{
+    "cartItems": [
+        {
+            "product_id": 1,
+            "cantidad": 2,
+            "precio": 100.50
+        }
+    ],
+    "total": 201.00
+}
+####
+GET http://localhost:4001/api/admin/orders
+Authorization: Bearer <ADMIN_TOKEN>
+####
+GET http://localhost:4001/api/admin/orders/1
+Authorization: Bearer <ADMIN_TOKEN>
+####
+GET http://localhost:4001/api/admin/products
+Authorization: Bearer <ADMIN_TOKEN>
+####
+POST http://localhost:4001/api/admin/products
+Content-Type: application/json
+Authorization: Bearer <ADMIN_TOKEN>
+
+{
+    "nombre": "Producto Admin",
+    "descripcion": "Producto creado por admin",
+    "precio": 200.00,
+    "stock": 5
+}
+####
+PUT http://localhost:4001/api/admin/products/1
+Content-Type: application/json
+Authorization: Bearer <ADMIN_TOKEN>
+
+{
+    "nombre": "Producto Admin Actualizado",
+    "descripcion": "Descripción actualizada",
+    "precio": 250.00,
+    "stock": 8
+}
+####
+DELETE http://localhost:4001/api/admin/products/1
+Authorization: Bearer <ADMIN_TOKEN>
