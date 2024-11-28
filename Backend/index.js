@@ -1,24 +1,28 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import productRoutes from './src/routes/productRoutes.js';
-import userRoutes from './src/routes/userRoutes.js';
-import cartRoutes from './src/routes/cartRoutes.js';
-import orderRoutes from './src/routes/orderRoutes.js';
-const app = express();
+import app from './app.js';
+import sequelize from './src/config/database.js';
+import setupAssociations from "./src/models/associations.js"; // Importar relaciones
 
-app.use(bodyParser.json());
-app.use(cors());
+async function main() {
+    try {
+        const init = process.argv[2];
 
-app.use('/products', productRoutes);
-app.use('/users', userRoutes);
-app.use('/carts', cartRoutes);
-app.use('/orders', orderRoutes);
+        // Definir relaciones entre modelos
+        setupAssociations(); // Ahora las relaciones se registran aquí
 
-app.get('/', (req, res) => {
-  res.send('API de Comercio Electrónico');
-});
+        if (init) {
+            await sequelize.sync({ force: true }); // Forzar recreación de tablas
+        } else {
+            await sequelize.sync({ force: false }); // Solo sincronizar tablas
+        }
 
-app.listen(4000, () => {
-  console.log('Servidor corriendo en el puerto 4000');
-});
+        console.log('Database synchronized');
+
+        app.listen(4001, () => {
+            console.log('Server is running on port 4001');
+        });
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+main();

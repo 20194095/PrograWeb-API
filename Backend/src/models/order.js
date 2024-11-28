@@ -1,16 +1,30 @@
-const orders = [
-    {
-      id: 1,
-      userId: 1,
-      date: new Date(),
-      totalAmount: 300.0,
-      products: [
-        { productId: 1, quantity: 2 },
-        { productId: 2, quantity: 1 }
-      ],
-      status: "completed" // "completed", "pending", "cancelled"
-    }
-  ];
-  
-  export default orders;
-  
+import sequelize from "../config/database.js";
+import { DataTypes } from "sequelize";
+
+const Order = sequelize.define("Order", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    fecha: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    },
+    total: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+    },
+    estado: {
+        type: DataTypes.ENUM("pendiente", "pagado", "enviado", "entregado"),
+        allowNull: false,
+        defaultValue: "pendiente",
+    },
+});
+
+export default Order;

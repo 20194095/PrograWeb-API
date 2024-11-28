@@ -1,17 +1,30 @@
-const users = [
-    {
-      id: 1,
-      username: "admin",
-      password: "admin", // Esto debería encriptarse en una aplicación real
-      role: "admin" // "admin" o "cliente"
+import sequelize from "../config/database.js";
+import { DataTypes } from "sequelize";
+
+const User = sequelize.define("User", {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
     },
-    {
-      id: 2,
-      username: "cliente",
-      password: "cliente", // Esto debería encriptarse en una aplicación real
-      role: "cliente"
-    }
-  ];
-  
-  export default users;
-  
+    nombre: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    tipo: {
+        type: DataTypes.ENUM("cliente", "administrador"),
+        allowNull: false,
+        defaultValue: "cliente",
+    },
+});
+
+export default User;
