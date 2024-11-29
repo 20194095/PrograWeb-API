@@ -1,17 +1,23 @@
 import RepositoryBase from "./RepositoryBase.js";
-import CartItem from "../models/CartItem.js";
+import CarritoDeCompra from "../models/CarritoDeCompra.js";
+import ItemDeCarrito from "../models/ItemCarrito.js";
 
 class CartRepository extends RepositoryBase {
     constructor() {
-        super(CartItem);
+        super(CarritoDeCompra);
     }
 
-    // Obtener el carrito del usuario por su ID
+    // Obtener el carrito completo del usuario (con ítems)
     async getCartByUserId(userId) {
         try {
-            return await this.model.findAll({
-                where: { user_id: userId },
-                include: ["product"], // Suponiendo que 'product' es la relación con los productos
+            return await this.model.findOne({
+                where: { idUsuario: userId },
+                include: [
+                    {
+                        model: ItemDeCarrito,
+                        include: ["product"], // Relación con productos
+                    },
+                ],
             });
         } catch (error) {
             console.error("Error in getCartByUserId:", error);
@@ -20,23 +26,43 @@ class CartRepository extends RepositoryBase {
     }
 
     // Agregar un producto al carrito
-    async addProduct(userId, productId, cantidad) {
+    async addProductToCart(cartId, productId, cantidad) {
         try {
-            return await this.model.create({ user_id: userId, product_id: productId, cantidad });
+            // Verificar si el producto ya existe en el carrito
+            const existingItem = await ItemDeCarrito.findOne({
+                where: { idCarrito: cartId, idProducto: productId },
+            });
+    
+            if (existingItem) {
+                // Si ya existe, actualiza la cantidad
+                existingItem.cantidad += cantidad;
+                await existingItem.save(); // Guarda los cambios
+                return existingItem;
+            }
+    
+            // Si no existe, crea un nuevo ítem en el carrito
+            return await ItemDeCarrito.create({
+                idCarrito: cartId,
+                idProducto: productId,
+                cantidad,
+            });
         } catch (error) {
-            console.error("Error in addProduct:", error);
+            console.error("Error in addProductToCart:", error);
             return null;
         }
     }
+    
 
     // Actualizar la cantidad de un producto en el carrito
-    async updateQuantity(userId, productId, cantidad) {
+    async updateQuantity(cartId, productId, cantidad) {
         try {
-            await this.model.update(
+            await ItemDeCarrito.update(
                 { cantidad },
-                { where: { user_id: userId, product_id: productId } }
+                { where: { idCarrito: cartId, idProducto: productId } }
             );
-            return await this.model.findOne({ where: { user_id: userId, product_id: productId } });
+            return await ItemDeCarrito.findOne({
+                where: { idCarrito: cartId, idProducto: productId },
+            });
         } catch (error) {
             console.error("Error in updateQuantity:", error);
             return null;
@@ -44,24 +70,45 @@ class CartRepository extends RepositoryBase {
     }
 
     // Eliminar un producto del carrito
-    async removeProduct(userId, productId) {
+    async removeProductFromCart(cartId, productId) {
         try {
-            return await this.model.destroy({ where: { user_id: userId, product_id: productId } });
+            return await ItemDeCarrito.destroy({
+                where: { idCarrito: cartId, idProducto: productId },
+            });
         } catch (error) {
-            console.error("Error in removeProduct:", error);
+            console.error("Error in removeProductFromCart:", error);
             return null;
         }
     }
 
-    // Vaciar el carrito del usuario
-    async clearCart(userId) {
+    // Vaciar el carrito
+    async clearCart(cartId) {
         try {
-            return await this.model.destroy({ where: { user_id: userId } });
+            return await ItemDeCarrito.destroy({ where: { idCarrito: cartId } });
         } catch (error) {
             console.error("Error in clearCart:", error);
             return null;
         }
     }
+    // Crear un nuevo carrito
+    async createCart(userId) {
+        try {
+            // Verifica si el usuario ya tiene un carrito
+            const existingCart = await this.model.findOne({ where: { idUsuario: userId } });
+            if (existingCart) {
+                return existingCart; // Retorna el carrito existente
+            }
+    
+            // Si no existe, crea uno nuevo
+            return await this.model.create({ idUsuario: userId });
+        } catch (error) {
+            console.error("Error in createCart:", error);
+            throw error;
+        }
+    }
+    
+
 }
+
 
 export default new CartRepository();

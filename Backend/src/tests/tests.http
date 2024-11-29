@@ -1,36 +1,72 @@
+
 POST http://localhost:4001/api/auth/register
 Content-Type: application/json
 
 {
-    "nombre": "JuanP",
-    "email": "juan.perez1@example.com",
+    "nombre": "Juan",
+    "apellido": "Perez",
+    "email": "juan.perez@example.com",
     "password": "password123",
-    "tipo": "administrador"
+    "tipo": "administrador",
+    "direccion": "Calle Falsa 123",
+    "ciudad": "Lima",
+    "telefono": "999999999"
+}
+
+####
+POST http://localhost:4001/api/auth/register
+Content-Type: application/json
+
+{
+    "nombre": "Pepe",
+    "apellido": "Perez",
+    "email": "juan.pepe@example.com",
+    "password": "password123",
+    "tipo": "cliente",
+    "direccion": "Calle Falsa 123",
+    "ciudad": "Lima",
+    "telefono": "999999999"
 }
 ####
 POST http://localhost:4001/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "juan.perez1@example.com",
+    "email": "juan.pepe@example.com",
     "password": "password123"
 }
 ####
+POST http://localhost:4001/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "juan.perez@example.com",
+    "password": "password123"
+}
+
+####
 GET http://localhost:4001/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImNsaWVudGUiLCJpYXQiOjE3MzI4MjY4NTcsImV4cCI6MTczMjgzMDQ1N30.du8XJ02J8SB3fmFpmVKI1-lyLlwc7hpj5jxHbkhviY8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTM1MTcsImV4cCI6MTczMjg5NzExN30.PE_rWIr9W7VMl7-SbAqOqrF0j8r0fCkmxEt1dia4Ers
 ####
 PUT http://localhost:4001/api/users/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImNsaWVudGUiLCJpYXQiOjE3MzI4MjY4NTcsImV4cCI6MTczMjgzMDQ1N30.du8XJ02J8SB3fmFpmVKI1-lyLlwc7hpj5jxHbkhviY8
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTM1MTcsImV4cCI6MTczMjg5NzExN30.PE_rWIr9W7VMl7-SbAqOqrF0j8r0fCkmxEt1dia4Ers
 
 {
     "nombre": "Juan Actualizado",
+    "apellido": "Perez Actualizado",
     "email": "juan.actualizado@example.com",
-    "password": "newpassword123"
+    "password": "newpassword123",
+    "direccion": "Avenida Siempre Viva 456",
+    "ciudad": "Arequipa",
+    "telefono": "998888888"
 }
+
 ####
 DELETE http://localhost:4001/api/users/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImNsaWVudGUiLCJpYXQiOjE3MzI4MjcyNzgsImV4cCI6MTczMjgzMDg3OH0.ax2ff9ebnS4CuVE3LMW1HypsmzVzwA-aC1_p4n2h63o
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTM1MTcsImV4cCI6MTczMjg5NzExN30.PE_rWIr9W7VMl7-SbAqOqrF0j8r0fCkmxEt1dia4Ers
+
+
 ####
 GET http://localhost:4001/api/products
 ####
@@ -40,107 +76,118 @@ GET http://localhost:4001/api/products/1
 ####
 POST http://localhost:4001/api/products
 Content-Type: application/json
-Authorization: Bearer <ADMIN_TOKEN>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTUzOTUsImV4cCI6MTczMjg5ODk5NX0.ZuZSqYNaKdSS6VAuo4lKbNo-CwX09cUWgIdMJL6U_LI
 
 {
-    "nombre": "Nuevo Producto",
-    "descripcion": "Descripción del producto",
+    "nombre": "Producto Nuevo",
+    "descripcion": "Descripción del nuevo producto",
+    "marca": "Marca Nueva",
     "precio": 100.50,
-    "stock": 10,
+    "stock": 20,
     "imagen": "http://example.com/image.jpg"
 }
 ####
 PUT http://localhost:4001/api/products/1
 Content-Type: application/json
-Authorization: Bearer <ADMIN_TOKEN>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdWFuLnBlcGVAZXhhbXBsZS5jb20iLCJ0aXBvIjoiY2xpZW50ZSIsImlhdCI6MTczMjg5Mzc0MywiZXhwIjoxNzMyODk3MzQzfQ.SvcwOtPDSg1AviOdTqW93OCyIyDrcB4ZqMoBDltJ1lI.eyJpZCI6MiwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTM2MTcsImV4cCI6MTczMjg5NzIxN30.ZGqbc-gK6D7EYpSfE9rQ2APYReycJVP2ui1ThNKTpvA
 
 {
     "nombre": "Producto Actualizado",
-    "descripcion": "Nueva descripción",
+    "descripcion": "Descripción actualizada",
+    "marca": "Marca Actualizada",
     "precio": 120.00,
-    "stock": 15
+    "stock": 15,
+    "imagen": "http://example.com/image_updated.jpg"
 }
 ####
 DELETE http://localhost:4001/api/products/1
-Authorization: Bearer <ADMIN_TOKEN>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTM2MTcsImV4cCI6MTczMjg5NzIxN30.ZGqbc-gK6D7EYpSfE9rQ2APYReycJVP2ui1ThNKTpvA
 ####
 GET http://localhost:4001/api/cart
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImNsaWVudGUiLCJpYXQiOjE3MzI4MjczMjEsImV4cCI6MTczMjgzMDkyMX0.hSO75ZjmbKYIAYQ7nPBj-VEIq8hxl03xocmRkVUcKLk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdWFuLnBlcGVAZXhhbXBsZS5jb20iLCJ0aXBvIjoiY2xpZW50ZSIsImlhdCI6MTczMjg5NDQ4NCwiZXhwIjoxNzMyODk4MDg0fQ.WHzZlzuuQK1w3D0jrP3CYBuN7rwYffGoTpPWCOGsqbE
 ####
 POST http://localhost:4001/api/cart
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImNsaWVudGUiLCJpYXQiOjE3MzI4MjczMjEsImV4cCI6MTczMjgzMDkyMX0.hSO75ZjmbKYIAYQ7nPBj-VEIq8hxl03xocmRkVUcKLk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdWFuLnBlcGVAZXhhbXBsZS5jb20iLCJ0aXBvIjoiY2xpZW50ZSIsImlhdCI6MTczMjg5NTQ3NCwiZXhwIjoxNzMyODk5MDc0fQ.ZIf628Cv1s5VL1hOAYEjlkZzV2j6qwXBR7aGVki_YL0
 
 {
-    "productId": 1,
+    "productId": 2,
     "cantidad": 2
 }
 ####
-PUT http://localhost:4001/api/cart/1
+PUT http://localhost:4001/api/cart/2
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImNsaWVudGUiLCJpYXQiOjE3MzI4MjczMjEsImV4cCI6MTczMjgzMDkyMX0.hSO75ZjmbKYIAYQ7nPBj-VEIq8hxl03xocmRkVUcKLk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdWFuLnBlcGVAZXhhbXBsZS5jb20iLCJ0aXBvIjoiY2xpZW50ZSIsImlhdCI6MTczMjg5NTQ3NCwiZXhwIjoxNzMyODk5MDc0fQ.ZIf628Cv1s5VL1hOAYEjlkZzV2j6qwXBR7aGVki_YL0
 
 {
     "cantidad": 5
 }
 ####
 DELETE http://localhost:4001/api/cart/1
-Authorization: Bearer <TOKEN>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdWFuLnBlcGVAZXhhbXBsZS5jb20iLCJ0aXBvIjoiY2xpZW50ZSIsImlhdCI6MTczMjg5NTQ3NCwiZXhwIjoxNzMyODk5MDc0fQ.ZIf628Cv1s5VL1hOAYEjlkZzV2j6qwXBR7aGVki_YL0
 ####
 DELETE http://localhost:4001/api/cart
 Authorization: Bearer <TOKEN>
 ####
 GET http://localhost:4001/api/orders
-Authorization: Bearer <TOKEN>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdWFuLnBlcGVAZXhhbXBsZS5jb20iLCJ0aXBvIjoiY2xpZW50ZSIsImlhdCI6MTczMjg5NTQ3NCwiZXhwIjoxNzMyODk5MDc0fQ.ZIf628Cv1s5VL1hOAYEjlkZzV2j6qwXBR7aGVki_YL0
 ####
 GET http://localhost:4001/api/orders/1
-Authorization: Bearer <TOKEN>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdWFuLnBlcGVAZXhhbXBsZS5jb20iLCJ0aXBvIjoiY2xpZW50ZSIsImlhdCI6MTczMjg5NTQ3NCwiZXhwIjoxNzMyODk5MDc0fQ.ZIf628Cv1s5VL1hOAYEjlkZzV2j6qwXBR7aGVki_YL0
 ####
 POST http://localhost:4001/api/orders
 Content-Type: application/json
-Authorization: Bearer <TOKEN>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiZW1haWwiOiJqdWFuLnBlcGVAZXhhbXBsZS5jb20iLCJ0aXBvIjoiY2xpZW50ZSIsImlhdCI6MTczMjg5NTQ3NCwiZXhwIjoxNzMyODk5MDc0fQ.ZIf628Cv1s5VL1hOAYEjlkZzV2j6qwXBR7aGVki_YL0
 
 {
-    "cartItems": [
+    "items": [
         {
-            "product_id": 1,
+            "idProducto": 2,
             "cantidad": 2,
             "precio": 100.50
         }
     ],
-    "total": 201.00
+    "total": 201.00,
+    "subTotal": 190.00,
+    "metodoDeEntrega": "delivery",
+    "nroTarjeta": "1234567890123456",
+    "tipoTarjeta": "Visa",
+    "fecha": "2024-11-30T00:00:00Z"
 }
 ####
 GET http://localhost:4001/api/admin/orders
-Authorization: Bearer <ADMIN_TOKEN>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTc4MDQsImV4cCI6MTczMjkwMTQwNH0.DloKxI2qxuHejxH2S8zEVxy1EQzytao3N-pYrGyLNGE
 ####
-GET http://localhost:4001/api/admin/orders/1
-Authorization: Bearer <ADMIN_TOKEN>
+GET http://localhost:4001/api/admin/orders/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTc4MDQsImV4cCI6MTczMjkwMTQwNH0.DloKxI2qxuHejxH2S8zEVxy1EQzytao3N-pYrGyLNGE
 ####
 GET http://localhost:4001/api/admin/products
-Authorization: Bearer <ADMIN_TOKEN>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTc4MDQsImV4cCI6MTczMjkwMTQwNH0.DloKxI2qxuHejxH2S8zEVxy1EQzytao3N-pYrGyLNGE
 ####
 POST http://localhost:4001/api/admin/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwiZW1haWwiOiJqdWFuLnBlcmV6MUBleGFtcGxlLmNvbSIsInRpcG8iOiJhZG1pbmlzdHJhZG9yIiwiaWF0IjoxNzMyODI3NzI4LCJleHAiOjE3MzI4MzEzMjh9.uRpbB5Pvq5TbTrGO4fUOIPtSYnE3ej-mOAF_ny24R6g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTc4MDQsImV4cCI6MTczMjkwMTQwNH0.DloKxI2qxuHejxH2S8zEVxy1EQzytao3N-pYrGyLNGE
 
 {
-    "nombre": "Producto Admin",
+    "nombre": "Producto Admin3",
     "descripcion": "Producto creado por admin",
+    "marca": "Marca Admin",
     "precio": 200.00,
-    "stock": 5
+    "stock": 10,
+    "imagen": "http://example.com/admin_product.jpg"
 }
 ####
 PUT http://localhost:4001/api/admin/products/1
 Content-Type: application/json
-Authorization: Bearer <ADMIN_TOKEN>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTc4MDQsImV4cCI6MTczMjkwMTQwNH0.DloKxI2qxuHejxH2S8zEVxy1EQzytao3N-pYrGyLNGE
 
 {
     "nombre": "Producto Admin Actualizado",
     "descripcion": "Descripción actualizada",
+    "marca": "Marca Actualizada",
     "precio": 250.00,
-    "stock": 8
+    "stock": 5
 }
 ####
-DELETE http://localhost:4001/api/admin/products/1
-Authorization: Bearer <ADMIN_TOKEN>
+DELETE http://localhost:4001/api/admin/products/4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJqdWFuLnBlcmV6QGV4YW1wbGUuY29tIiwidGlwbyI6ImFkbWluaXN0cmFkb3IiLCJpYXQiOjE3MzI4OTc4MDQsImV4cCI6MTczMjkwMTQwNH0.DloKxI2qxuHejxH2S8zEVxy1EQzytao3N-pYrGyLNGE

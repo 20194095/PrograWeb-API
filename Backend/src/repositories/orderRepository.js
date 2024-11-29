@@ -1,18 +1,18 @@
 import RepositoryBase from "./RepositoryBase.js";
-import Order from "../models/Order.js";
-import OrderItem from "../models/OrderItem.js";
+import Orden from "../models/orden.js";
+import ItemDeLaOrden from "../models/ItemDeLaOrden.js";
 
 class OrderRepository extends RepositoryBase {
     constructor() {
-        super(Order);
+        super(Orden);
     }
 
-    // Obtener órdenes por ID de usuario
+    // Obtener órdenes por usuario
     async getOrdersByUserId(userId) {
         try {
             return await this.model.findAll({
-                where: { user_id: userId },
-                include: ["order_items"], // Suponiendo que 'order_items' es la relación con los ítems de la orden
+                where: { idUsuario: userId },
+                include: ["order_items"], // Relación con ítems de la orden
             });
         } catch (error) {
             console.error("Error in getOrdersByUserId:", error);
@@ -20,44 +20,72 @@ class OrderRepository extends RepositoryBase {
         }
     }
 
-    // Obtener una orden específica por ID
-    async getOrderById(userId, orderId) {
+    // Crear una nueva orden
+    async createOrder(userId, items, total, subTotal, metodoDeEntrega, nroTarjeta, tipoTarjeta, fecha) {
         try {
-            return await this.model.findOne({
-                where: { user_id: userId, id: orderId },
-                include: ["order_items"], // Incluir ítems de la orden
+            const order = await this.model.create({
+                idUsuario: userId,
+                total,
+                subTotal,
+                metodoDeEntrega,
+                nroTarjeta,
+                tipoTarjeta,
+                fecha, // Incluir el campo fecha
             });
+
+            // Crear los ítems de la orden
+            const orderItems = items.map((item) => ({
+                idOrden: order.id,
+                idProducto: item.idProducto,
+            }));
+
+            await ItemDeLaOrden.bulkCreate(orderItems);
+
+            return order;
+        } catch (error) {
+            console.error("Error en createOrder:", error);
+            throw error;
+        }
+    }
+    async getOrderById(orderId) {
+        try {
+            console.log("Fetching order with ID:", orderId); // Log del ID recibido
+            const order = await this.model.findOne({
+                where: { id: orderId },
+                include: [
+                    {
+                        model: ItemDeLaOrden,
+                        as: "order_items",
+                    },
+                ],
+            });
+            console.log("Order fetched:", order); // Log del resultado
+            return order;
         } catch (error) {
             console.error("Error in getOrderById:", error);
             return null;
         }
     }
-
-    // Crear una nueva orden
-    async createOrder(userId, cartItems, total) {
+    async getAllOrders() {
         try {
-            const order = await this.model.create({
-                user_id: userId,
-                total,
-                estado: "pendiente",
+            return await this.model.findAll({
+                include: [
+                    {
+                        model: ItemDeLaOrden,
+                        as: "order_items",
+                    },
+                ],
             });
-
-            // Crear los ítems de la orden
-            const orderItems = cartItems.map((item) => ({
-                order_id: order.id,
-                product_id: item.product_id,
-                cantidad: item.cantidad,
-                precio: item.product.precio,
-            }));
-
-            await OrderItem.bulkCreate(orderItems);
-
-            return order;
         } catch (error) {
-            console.error("Error in createOrder:", error);
+            console.error("Error in getAllOrders:", error);
             return null;
         }
     }
+    
+    
+    
+    
 }
+
 
 export default new OrderRepository();

@@ -15,6 +15,10 @@ const Product = sequelize.define("Product", {
         type: DataTypes.TEXT,
         allowNull: false,
     },
+    marca: { // Agregado
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     precio: {
         type: DataTypes.FLOAT,
         allowNull: false,
@@ -22,10 +26,6 @@ const Product = sequelize.define("Product", {
     stock: {
         type: DataTypes.INTEGER,
         allowNull: false,
-    },
-    imagen: {
-        type: DataTypes.STRING, // URL o ruta local
-        allowNull: true,
     },
 });
 

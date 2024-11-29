@@ -16,12 +16,16 @@ class RepositoryBase {
     // Crear un nuevo registro
     async create(entity) {
         try {
-            return await this.model.create(entity);
+            console.log("Datos recibidos para creación:", entity); // Log de entrada
+            const result = await this.model.create(entity);
+            console.log("Resultado de la creación:", result); // Log de salida
+            return result;
         } catch (error) {
             console.error("Error in create:", error);
             return null;
         }
     }
+    
 
     // Buscar un registro por ID
     async findById(id) {

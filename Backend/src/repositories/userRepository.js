@@ -1,5 +1,5 @@
 import RepositoryBase from "./RepositoryBase.js";
-import User from "../models/User.js";
+import User from "../models/user.js";
 
 class UserRepository extends RepositoryBase {
     constructor() {
@@ -15,6 +15,18 @@ class UserRepository extends RepositoryBase {
             return null;
         }
     }
+
+    // Actualizar información del usuario
+    async updateUser(id, updates) {
+        try {
+            await this.model.update(updates, { where: { id } });
+            return await this.findById(id);
+        } catch (error) {
+            console.error("Error in updateUser:", error);
+            return null;
+        }
+    }
 }
+
 
 export default new UserRepository();

@@ -1,13 +1,13 @@
 import sequelize from "../config/database.js";
 import { DataTypes } from "sequelize";
 
-const Order = sequelize.define("Order", {
+const Orden = sequelize.define("Orden", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
     },
-    user_id: {
+    idUsuario: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
@@ -20,11 +20,22 @@ const Order = sequelize.define("Order", {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
-    estado: {
-        type: DataTypes.ENUM("pendiente", "pagado", "enviado", "entregado"),
+    subTotal: {
+        type: DataTypes.FLOAT,
         allowNull: false,
-        defaultValue: "pendiente",
+    },
+    metodoDeEntrega: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    nroTarjeta: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    tipoTarjeta: {
+        type: DataTypes.STRING,
+        allowNull: true,
     },
 });
 
-export default Order;
+export default Orden;

@@ -1,4 +1,3 @@
-// adminRoutes.js
 import express from "express";
 import orderController from "../controllers/orderController.js";
 import productController from "../controllers/productController.js";

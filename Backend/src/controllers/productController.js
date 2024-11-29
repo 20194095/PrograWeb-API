@@ -28,23 +28,27 @@ const findOne = async (req, res) => {
 
 const create = async (req, res) => {
     try {
-        const product = await productRepository.create(req.body);
+        const { nombre, descripcion, precio, stock, marca } = req.body; // Agregado `marca`
+        const product = await productRepository.create({ nombre, descripcion, precio, stock, marca });
         return res.status(201).json(product);
     } catch (error) {
-        console.error("Error in create:", error);
-        return res.status(500).json({ message: "Error creating product." });
+        console.error("Error en create:", error);
+        return res.status(500).json({ message: "Error creando producto." });
     }
 };
 
+
 const update = async (req, res) => {
     try {
-        const updatedProduct = await productRepository.update(req.params.id, req.body);
+        const { nombre, descripcion, precio, stock, marca } = req.body; // Agregado `marca`
+        const updatedProduct = await productRepository.update(req.params.id, { nombre, descripcion, precio, stock, marca });
         return res.status(200).json(updatedProduct);
     } catch (error) {
-        console.error("Error in update:", error);
-        return res.status(500).json({ message: "Error updating product." });
+        console.error("Error en update:", error);
+        return res.status(500).json({ message: "Error actualizando producto." });
     }
 };
+
 
 const remove = async (req, res) => {
     try {

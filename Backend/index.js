@@ -3,6 +3,7 @@ dotenv.config();
 
 import app from './app.js';
 import sequelize from './src/config/database.js';
+
 import setupAssociations from "./src/models/associations.js"; // Importar relaciones
 
 async function main() {

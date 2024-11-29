@@ -22,4 +22,5 @@ class ProductRepository extends RepositoryBase {
     }
 }
 
+
 export default new ProductRepository();

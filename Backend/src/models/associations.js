@@ -1,23 +1,33 @@
-import User from "./User.js";
-import Product from "./Product.js";
-import CartItem from "./CartItem.js";
-import Order from "./Order.js";
-import OrderItem from "./OrderItem.js";
-
+import User from "./user.js";
+import Producto from "./Product.js";
+import ItemDeCarrito from "./ItemCarrito.js"
+import CarritoDeCompra from "./CarritoDeCompra.js"
+import Orden from "./orden.js";
+import ItemDeLaOrden from "./ItemDeLaOrden.js";
 
 export default function setupAssociations() {
-    User.hasMany(CartItem, { foreignKey: "user_id" });
-    CartItem.belongsTo(User, { foreignKey: "user_id" });
+    // Relación entre Usuario y CarritoDeCompra
+    User.hasOne(CarritoDeCompra, { foreignKey: "idUsuario" });
+    CarritoDeCompra.belongsTo(User, { foreignKey: "idUsuario" });
 
-    User.hasMany(Order, { foreignKey: "user_id" });
-    Order.belongsTo(User, { foreignKey: "user_id" });
+    // Relación entre Usuario y Orden
+    User.hasMany(Orden, { foreignKey: "idUsuario" });
+    Orden.belongsTo(User, { foreignKey: "idUsuario" });
 
-    Order.hasMany(OrderItem, { foreignKey: "order_id" });
-    OrderItem.belongsTo(Order, { foreignKey: "order_id" });
+    // Relación entre CarritoDeCompra y ItemDeCarrito
+    CarritoDeCompra.hasMany(ItemDeCarrito, { foreignKey: "idCarrito" });
+    ItemDeCarrito.belongsTo(CarritoDeCompra, { foreignKey: "idCarrito" });
 
-    Product.hasMany(CartItem, { foreignKey: "product_id" });
-    CartItem.belongsTo(Product, { foreignKey: "product_id" });
+    Producto.hasMany(ItemDeCarrito, { foreignKey: "idProducto", as: "items" });
+    ItemDeCarrito.belongsTo(Producto, { foreignKey: "idProducto", as: "product" });
+    
 
-    Product.hasMany(OrderItem, { foreignKey: "product_id" });
-    OrderItem.belongsTo(Product, { foreignKey: "product_id" });
+    Orden.hasMany(ItemDeLaOrden, { foreignKey: "idOrden", as: "order_items" });
+    ItemDeLaOrden.belongsTo(Orden, { foreignKey: "idOrden" });
+    
+
+
+    // Relación entre Producto y ItemDeLaOrden
+    Producto.hasMany(ItemDeLaOrden, { foreignKey: "idProducto" });
+    ItemDeLaOrden.belongsTo(Producto, { foreignKey: "idProducto" });
 }
