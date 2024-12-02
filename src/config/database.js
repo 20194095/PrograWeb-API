@@ -1,9 +1,9 @@
 import Sequelize from "sequelize";
 
-const hostname = 'localhost';
-const username = 'postgres';
-const password = 'kolasito21';
-const database = 'matricula2024';
+const hostname = 'prograulima.postgres.database.azure.com';
+const username = 'administrador';
+const password = 'Pwwp4296';
+const database = 'Coolbox';
 const port = 5432;
 const dialect = 'postgres';
 
