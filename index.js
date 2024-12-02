@@ -18,14 +18,12 @@ async function main() {
         } else {
             await sequelize.sync({ force: false }); // Solo sincronizar tablas
         }
-        
+
         const port = process.env.PORT || 4001;
-
-        console.log('Database synchronized');
-
         app.listen(port, () => {
-            console.log('Server is running on port 4001');
+            console.log(`Server is running on port ${port}`);
         });
+
     } catch (error) {
         console.error(error);
     }

@@ -11,7 +11,13 @@ const sequelize = new Sequelize(database, username, password, {
     host: hostname,
     port: port,
     dialect: dialect,
-    operatorAliases: false
+    dialectOptions: {
+        ssl: {
+            require: true, // Obliga a usar SSL
+            rejectUnauthorized: false // Ignora certificados autofirmados
+        }
+    },
+    logging: console.log, // Opcional: para ver las consultas SQL en la consola
 });
 
 export default sequelize;
